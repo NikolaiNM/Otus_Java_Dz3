@@ -29,6 +29,7 @@ public abstract class AbsTable implements ITable{
     public void delete() {
         dbConnector.execute(String.format("drop table if exists %s;",this.tableName));
     }
+
     public ResultSet selectAll() {
         return dbConnector.executeQuery(String.format("SELECT * FROM  %s;",this.tableName));
     }

@@ -45,14 +45,14 @@ public class AnimalTable extends AbsTable {
         resultSet = this.dbConnector.executeQuery(String.format("SELECT * FROM %s;", NAME));
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
-            String color = resultSet.getString("color");
-            String name = resultSet.getString("name");
-            int weight = resultSet.getInt("weight");
             String type = resultSet.getString("type");
+            String name = resultSet.getString("name");
+            String color = resultSet.getString("color");
             int age = resultSet.getInt("age");
+            int weight = resultSet.getInt("weight");
 
             Animal animals = new Animal(id, color, name, weight, type, age);
-            animals.getAge();
+            //animals.getAge();
             animal.add(animals);
 
         }
