@@ -20,15 +20,6 @@ public class AnimalTable extends AbsTable {
                 NAME, animal.getId(), animal.getColor(), animal.getName(), animal.getWeight(), animal.getType(), animal.getAge()));
     }
 
-//    public ResultSet selectCountAnimals() {
-//        return dbConnector.executeQuery(String.format("SELECT COUNT(%s.id) AS total_count FROM %s;", NAME, NAME));
-//    }
-//
-//    public ResultSet selectMaxAnimals() {
-//        return dbConnector.executeQuery(String.format("SELECT MAX(%s.age) AS max_age FROM %s;", NAME, NAME));
-//    }
-
-
     public void print(ResultSet rs) throws SQLException {
         // Вывод заголовка на экран
         System.out.printf("%-5s %-10s %-20s %-10s %-5s %-10s%n", "ID", "Type", "Name", "Color", "Age", "Weight");
@@ -65,7 +56,6 @@ public class AnimalTable extends AbsTable {
             animal.add(animals);
 
         }
-
         return animal;
     }
 }

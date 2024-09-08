@@ -10,7 +10,6 @@ public enum Command {
         try {
             return Command.valueOf(command.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
-            //System.out.println("Команда " + command+ " не опознана");
             return null;
         }
 

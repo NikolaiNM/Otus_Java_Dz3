@@ -18,12 +18,11 @@ public class Main {
 
         InputIntValidator validator = new InputIntValidator(scanner);
 
-//        List<Animal> animals = new ArrayList<>(); // Создаем коллекцию - список Animals ArrayList
-
         System.out.print("Привет! Вводи команду Add / List / Exit : ");       // Приветствие
 
         AnimalTable animalTable = new AnimalTable();
 
+        // создание таблицы
         List<String> columnsAnimalTable = new ArrayList<>();
         columnsAnimalTable.add("id INT AUTO_INCREMENT PRIMARY KEY");
         columnsAnimalTable.add("color VARCHAR(20)");
@@ -32,13 +31,6 @@ public class Main {
         columnsAnimalTable.add("type VARCHAR(20)");
         columnsAnimalTable.add("age INT");
         animalTable.create(columnsAnimalTable);
-
-//        animalTable.write(new objects.Animal("красный", "муся", 5, "кошка",  5));
-
-
-
-//        ArrayList<objects.Animal> an = animalTable.read();
-//        System.out.println(an);
 
         // цикл пока не выберем exit
         while (true) {
@@ -89,7 +81,7 @@ public class Main {
 
                 case LIST:
                     //если ввели LIST
-                    ResultSet rs = animalTable.selectall();
+                    ResultSet rs = animalTable.selectAll();
                     if (rs != null) {
                         animalTable.print(rs);
                     }
