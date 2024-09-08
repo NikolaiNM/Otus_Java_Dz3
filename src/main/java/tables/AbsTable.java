@@ -22,8 +22,6 @@ public abstract class AbsTable implements ITable{
         // Проверяем существование таблицы
         if (!isTableExists()) {
             dbConnector.execute(String.format("CREATE TABLE %s (%s);", tableName, String.join(",", columns)));
-        } else {
-            //System.out.println("Таблица уже существует.");
         }
     }
 
