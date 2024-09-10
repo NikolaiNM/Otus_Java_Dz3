@@ -82,10 +82,14 @@ public class Main {
                     break;
 
                 case LIST:
-                    //если ввели LIST
-                    ResultSet rs = animalTable.selectAll();
-                    if (rs != null) {
-                        animalTable.print(rs);
+
+                    ArrayList<Animal> an = animalTable.read();
+                    if (an != null && !an.isEmpty()) {
+                        for (Animal animal : an) {
+                            System.out.println(animal);
+                        }
+                    } else {
+                        System.out.println("Список пуст");
                     }
                     System.out.print("Вводи команду Add / List / Exit : ");
                     break;

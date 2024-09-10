@@ -72,14 +72,12 @@ public class Animal implements ObjectDB {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                ", weight=" + weight +
-                ", age=" + age +
-                '}';
+        return "Привет! " +
+                "Меня зовут " + name
+                + ", мне " + age + " " + correctAgeStr(age)
+                + ", я вешу - " + weight
+                + " кг, мой цвет - " + color
+                + ". id=" + id;
     }
 
     public void say() {
