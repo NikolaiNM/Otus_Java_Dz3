@@ -5,7 +5,7 @@ import menu.Command;
 import tables.AnimalTable;
 import utils.InputIntValidator;
 
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
