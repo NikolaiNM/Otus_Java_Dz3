@@ -19,9 +19,9 @@ public class AnimalCreator {
         String type;
         boolean rightType = false;
         do {
-            System.out.print("Какое животное вы хотите добавить cat / dog / duck : ");
+            System.out.printf("Какое животное вы хотите добавить %s: ", String.join(" / ", AnimalFactory.ANIMAL_TYPES));
             type = scanner.next().trim().toUpperCase();
-            if ("CAT".equals(type) || "DOG".equals(type) || "DUCK".equals(type)) {
+            if (AnimalFactory.ANIMAL_TYPES.contains(type)) {
                 rightType = true;
             } else {
                 System.out.println("Неизвестное животное, попробуйте еще раз");

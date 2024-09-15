@@ -40,7 +40,7 @@ public class Main {
             // Вывод меню
             List<String> commandNames = new ArrayList<>();
             for (Command commandData: Command.values()) {
-                commandNames.add(commandData.name().toLowerCase());
+                commandNames.add(commandData.name());
             }
             System.out.printf("Вводи команду %s: ", String.join(" / ", commandNames));
 
