@@ -2,9 +2,11 @@ package tables;
 
 import db.IDBConnect;
 import db.MySQLConnect;
+import objects.Animal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbsTable implements ITable{
@@ -19,8 +21,10 @@ public abstract class AbsTable implements ITable{
     //CREATE TABLE tableName (column1 INT PRIMARY KEY , column2 VARCHAR(255), column3, ...);
     @Override
     public void create(List<String> columns) {
+        //delete();
         // Проверяем существование таблицы
         if (!isTableExists()) {
+
             dbConnector.execute(String.format("CREATE TABLE %s (%s);", tableName, String.join(",", columns)));
         }
     }
@@ -29,6 +33,10 @@ public abstract class AbsTable implements ITable{
     public void delete() {
         dbConnector.execute(String.format("drop table if exists %s;",this.tableName));
     }
+
+    public abstract ArrayList<Animal> read() throws SQLException;
+    public abstract void update(Animal data);
+    public abstract void write(Animal data);
 
     public ResultSet selectAll() {
         return dbConnector.executeQuery(String.format("SELECT * FROM  %s;",this.tableName));

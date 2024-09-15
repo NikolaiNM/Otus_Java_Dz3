@@ -74,7 +74,8 @@ public class Animal implements ObjectDB {
     public String toString() {
         return "Привет! " +
                 "Меня зовут " + name
-                + ", мне " + age + " " + correctAgeStr(age)
+                + ", я " + type
+                + ". Мне " + age + " " + correctAgeStr(age)
                 + ", я вешу - " + weight
                 + " кг, мой цвет - " + color
                 + ". id=" + id;
