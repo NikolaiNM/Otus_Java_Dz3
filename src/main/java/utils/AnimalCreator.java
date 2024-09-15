@@ -20,7 +20,7 @@ public class AnimalCreator {
         boolean rightType = false;
         do {
             System.out.print("Какое животное вы хотите добавить cat / dog / duck : ");
-            type = scanner.nextLine().trim().toUpperCase();
+            type = scanner.next().trim().toUpperCase();
             if ("CAT".equals(type) || "DOG".equals(type) || "DUCK".equals(type)) {
                 rightType = true;
             } else {
@@ -29,7 +29,7 @@ public class AnimalCreator {
         } while (!rightType);
 
         System.out.println("Как зовут животное?");
-        String name = scanner.nextLine().trim();
+        String name = scanner.next().trim();
 
         int age = validator.getValidInput("Сколько ему лет?", "Возраст должен", 1, 20);
 

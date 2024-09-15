@@ -2,11 +2,13 @@ import db.MySQLConnect;
 import objects.Animal;
 import data.AnimalFactory;
 import menu.Command;
+import tables.AbsTable;
 import tables.AnimalTable;
 import utils.AnimalCreator;
 import utils.InputIntValidator;
 
 //import java.sql.ResultSet;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +22,9 @@ public class Main {
     private static AnimalCreator animalCreator = new AnimalCreator(scanner, validator); // Создаем экземпляр нового класса
 
     public static void main(String[] args) throws SQLException {
-
-
-
-        System.out.print("Привет! Вводи команду Add / List / Exit : ");       // Приветствие
-
+        // создание таблицы
         AnimalTable animalTable = new AnimalTable();
 
-        // создание таблицы
         List<String> columnsAnimalTable = new ArrayList<>();
         columnsAnimalTable.add("id INT AUTO_INCREMENT PRIMARY KEY");
         columnsAnimalTable.add("type VARCHAR(20)");
@@ -40,13 +37,19 @@ public class Main {
 
         // цикл пока не выберем exit
         while (true) {
+            // Вывод меню
+            List<String> commandNames = new ArrayList<>();
+            for (Command commandData: Command.values()) {
+                commandNames.add(commandData.name().toLowerCase());
+            }
+            System.out.printf("Вводи команду %s: ", String.join(" / ", commandNames));
 
             String input = scanner.nextLine();                  // Запись в input из терминала
             Command command = Command.fromString(input);        // Объявление переменной command для menu.Command(enum)
 
             // Проверка если ввели пустую команду
             if (command == null) {                               // Проверяет чтобы в команде не был нулл
-                System.out.print("Неверная команда, попробуйте еще : ");
+                System.out.println("Неверная команда, попробуйте еще : ");
                 continue;                                       // необходимо для продолжения если в command null
             }
 
@@ -60,30 +63,48 @@ public class Main {
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
                     }
-                    System.out.print("Вводи команду Add / List / Exit : ");
                     break;
 
                 case LIST:
-                    ArrayList<Animal> an = animalTable.read();
-                    if (an != null && !an.isEmpty()) {
-                        for (Animal animal : an) {
+                    if (animalTable.isTableEmpty()) {
+                        System.out.println("Список пуст. Добавьте животное");
+                    } else {
+                        ArrayList<Animal> animals = animalTable.read();
+                        for (Animal animal : animals) {
                             System.out.println(animal);
                         }
-                    } else {
-                        System.out.println("Список пуст");
                     }
-                    System.out.print("Вводи команду Add / List / Exit : ");
                     break;
 
                 case UPDATE:
-                    System.out.println("Введите id животного: ");
-                    int id =scanner.nextInt();
+                    if (animalTable.isTableEmpty()) {
+                        System.out.println("Список пуст. Добавьте животное");
+                        break;
+                    }
 
-                    Animal newAnimal = animalCreator.createAnimalWithData();
-                    newAnimal.setId(id);
+                    boolean isIdExists = false;
 
-                    animalTable.update(newAnimal);
+                    while(!isIdExists) {
+                        System.out.print("Введите id животного (только цифры): ");
+                        while (!scanner.hasNextInt()) {
+                            System.out.print("Введите id животного (только цифры): ");
+                            scanner.next();
+                        }
+                        int id = scanner.nextInt();
 
+                        if (!animalTable.isIdExists(id)) {
+                            System.out.println("Животное с id " + id + " не найдено, попробуйте другой id: ");
+                        } else {
+
+                            Animal newAnimal = animalCreator.createAnimalWithData();
+                            newAnimal.setId(id);
+
+                            animalTable.update(newAnimal);
+                            newAnimal.say();
+
+                            isIdExists = true;
+                        }
+                    }
                     break;
 
                 case EXIT:                                  //если ввели EXIT
