@@ -68,6 +68,6 @@ public class AnimalTable extends AbsTable {
                 animal.getAge(),
                 animal.getWeight(),
                 animal.getId()
-                ));
+        ));
     }
 }

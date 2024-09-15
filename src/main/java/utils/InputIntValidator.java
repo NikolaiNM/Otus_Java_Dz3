@@ -15,19 +15,19 @@ public class InputIntValidator {
         int value = 0;
         boolean isValid = false;
         do {
-            System.out.println(hint + " (число от " + min + " до " + max + ")" );
+            System.out.println(hint + " (число от " + min + " до " + max + ")");
             try {
                 value = scanner.nextInt();
                 if (value >= min && value <= max) {
                     isValid = true;
-                }  else {
-                    System.out.println(paramMast + " быть в диапазоне от " + min + " до " + max );
+                } else {
+                    System.out.println(paramMast + " быть в диапазоне от " + min + " до " + max);
                 }
-            }catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Вводите только цифры!");
                 scanner.nextLine();
             }
-        }while (!isValid);
+        } while (!isValid);
         scanner.nextLine();
         return value;
     }
