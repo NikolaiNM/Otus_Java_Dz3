@@ -42,6 +42,17 @@ public class AnimalTable extends AbsTable {
         return animal;
     }
 
+    public ArrayList<Animal> read(String animalType) throws SQLException {
+        String query = "SELECT * FROM " + NAME + " WHERE type = ?";
+        try (PreparedStatement statement = MySQLConnect.getConnection().prepareStatement(query)) {
+            statement.setString(1, animalType);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return getAnimalsFromResultSet(resultSet);
+            }
+        }
+    }
+
+
     public boolean isIdExists(int id) throws SQLException {
         String query = "SELECT COUNT(*) FROM animals WHERE id = ?";
         try (PreparedStatement statement = MySQLConnect.getConnection().prepareStatement(query)) {
@@ -69,5 +80,21 @@ public class AnimalTable extends AbsTable {
                 animal.getWeight(),
                 animal.getId()
         ));
+    }
+
+    private ArrayList<Animal> getAnimalsFromResultSet(ResultSet resultSet) throws SQLException {
+        ArrayList<Animal> animals = new ArrayList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String type = resultSet.getString("type");
+            String name = resultSet.getString("name");
+            String color = resultSet.getString("color");
+            int age = resultSet.getInt("age");
+            int weight = resultSet.getInt("weight");
+
+            Animal animal = new Animal(id, color, name, weight, type, age);
+            animals.add(animal);
+        }
+        return animals;
     }
 }

@@ -2,13 +2,9 @@ import db.MySQLConnect;
 import objects.Animal;
 import data.AnimalFactory;
 import menu.Command;
-import tables.AbsTable;
 import tables.AnimalTable;
 import utils.AnimalCreator;
 import utils.InputIntValidator;
-
-//import java.sql.ResultSet;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +53,7 @@ public class Main {
             switch (command) {
                 case ADD:                                   //если ввели ADD
                     try {
-                        Animal newAnimal = animalCreator.createAnimalWithData();
+                        Animal newAnimal = animalCreator.createAnimalWithData("Какое животное вы хотите добавить");
                         animalTable.write(newAnimal);
                         newAnimal.say();
                     } catch (IllegalArgumentException e) {
@@ -69,9 +65,32 @@ public class Main {
                     if (animalTable.isTableEmpty()) {
                         System.out.println("Список пуст. Добавьте животное");
                     } else {
-                        ArrayList<Animal> animals = animalTable.read();
-                        for (Animal animal : animals) {
-                            System.out.println(animal);
+                        System.out.println("Выберете вариант вывода списка:\n1 - Весь список\n2 - Список по типам животных");
+                        String filter = scanner.nextLine();
+
+                        switch (filter) {
+                            case "1":
+                                ArrayList<Animal> animals = animalTable.read();
+                                for (Animal animal : animals) {
+                                    System.out.println(animal);
+                                }
+                                break;
+                            case "2":
+                                System.out.printf("Введите тип животного которого хотите вывести %s: ", String.join(" / ", AnimalFactory.ANIMAL_TYPES));
+                                String animalType = scanner.nextLine();
+
+                                ArrayList<Animal> animalsByType = animalTable.read(animalType);
+                                if (animalsByType.isEmpty()) {
+                                    System.out.println("Животные заданного типа не найдены");
+                                } else {
+                                    for (Animal animal : animalsByType) {
+                                        System.out.println(animal);
+                                    }
+                                }
+                                break;
+                            default:
+                                System.out.println("Неверный вариант фильтра");
+                                break;
                         }
                     }
                     break;
@@ -96,7 +115,7 @@ public class Main {
                             System.out.println("Животное с id " + id + " не найдено, попробуйте другой id: ");
                         } else {
 
-                            Animal newAnimal = animalCreator.createAnimalWithData();
+                            Animal newAnimal = animalCreator.createAnimalWithData("На какое животное вы хотите изменить");
                             newAnimal.setId(id);
 
                             animalTable.update(newAnimal);
