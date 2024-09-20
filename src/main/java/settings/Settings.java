@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Settings implements ISettings{
+public class Settings implements ISettings {
 
     @Override
     public Map<String, String> getSettings() {

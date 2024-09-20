@@ -1,8 +1,11 @@
 package menu;
 
+import tables.AnimalTable;
+
 public enum Command {
     ADD,
     LIST,
+    UPDATE,
     EXIT;
 
 
@@ -12,8 +15,6 @@ public enum Command {
         } catch (IllegalArgumentException e) {
             return null;
         }
-
-
     }
 }
 

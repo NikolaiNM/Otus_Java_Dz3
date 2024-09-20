@@ -5,6 +5,9 @@ import animals.pets.Cat;
 import animals.pets.Dog;
 import animals.birds.Duck;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AnimalFactory {
     public static Animal createAnimal(String type, String name, int age, int weight, String color) {
         switch (type) {
@@ -18,4 +21,6 @@ public class AnimalFactory {
                 throw new IllegalArgumentException("Неизвестный тип животного: " + type);
         }
     }
+
+    public static final List<String> ANIMAL_TYPES = Arrays.asList("CAT", "DOG", "DUCK");
 }

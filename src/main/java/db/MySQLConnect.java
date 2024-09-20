@@ -9,7 +9,7 @@ public class MySQLConnect implements IDBConnect {
     private static Connection connection = null;
     private static Statement statement = null;
 
-    private void open() {
+    private static void open() {
         Settings confReader = new Settings();
         Map<String, String> confData = confReader.getSettings();
         try {
@@ -65,5 +65,12 @@ public class MySQLConnect implements IDBConnect {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public static Connection getConnection() {
+        if (connection == null) {
+            open();
+        }
+        return connection;
     }
 }

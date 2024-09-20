@@ -3,6 +3,7 @@ package tables;
 import db.MySQLConnect;
 import objects.Animal;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class AnimalTable extends AbsTable {
                 NAME, animal.getId(), animal.getColor(), animal.getName(), animal.getWeight(), animal.getType(), animal.getAge()));
     }
 
-    public ArrayList<Animal> read () throws SQLException {
+    public ArrayList<Animal> read() throws SQLException {
         ArrayList<Animal> animal = new ArrayList<>();
         ResultSet resultSet;
 
@@ -39,5 +40,34 @@ public class AnimalTable extends AbsTable {
 
         }
         return animal;
+    }
+
+    public boolean isIdExists(int id) throws SQLException {
+        String query = "SELECT COUNT(*) FROM animals WHERE id = ?";
+        try (PreparedStatement statement = MySQLConnect.getConnection().prepareStatement(query)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1) > 0;
+        }
+    }
+
+    public boolean isTableEmpty() throws SQLException {
+        ArrayList<Animal> animals = read();
+        return animals == null || animals.isEmpty();
+    }
+
+
+    public void update(Animal animal) {
+        this.dbConnector.execute(String.format(
+                "UPDATE %s SET type='%s', name='%s', color='%s', age=%d, weight=%d WHERE id=%d;",
+                NAME,
+                animal.getType(),
+                animal.getName(),
+                animal.getColor(),
+                animal.getAge(),
+                animal.getWeight(),
+                animal.getId()
+        ));
     }
 }
