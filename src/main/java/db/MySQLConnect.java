@@ -9,6 +9,10 @@ public class MySQLConnect implements IDBConnect {
     private static Connection connection = null;
     private static Statement statement = null;
 
+    public MySQLConnect() {
+        this.open();
+    }
+
     private static void open() {
         Settings confReader = new Settings();
         Map<String, String> confData = confReader.getSettings();
@@ -48,7 +52,6 @@ public class MySQLConnect implements IDBConnect {
 
     @Override
     public void execute(String sqlRequest) {
-        this.open();
         try {
             statement.execute(sqlRequest);
         } catch (SQLException ex) {
@@ -58,7 +61,6 @@ public class MySQLConnect implements IDBConnect {
 
     @Override
     public ResultSet executeQuery(String sqlRequest) {
-        this.open();
         try {
             return statement.executeQuery(sqlRequest);
         } catch (SQLException ex) {
@@ -68,9 +70,6 @@ public class MySQLConnect implements IDBConnect {
     }
 
     public static Connection getConnection() {
-        if (connection == null) {
-            open();
-        }
         return connection;
     }
 }
